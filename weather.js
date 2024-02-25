@@ -8,6 +8,6 @@ export const getWeather = async (ctx) => {
     config.weatherUrl + `${locationLatitude}, ${locationLongitude}`
   );
 
-  let text = `Сейчас в ${res.data.location.name}е, температура воздуха: ${res.data.current.temp_c}°C, влажность ${res.data.current.humidity}%`;
+  let text = `Сейчас в населенном пункте ${res.data.location.name}, температура воздуха: ${res.data.current.temp_c}°C, влажность ${res.data.current.humidity}%`;
   return text;
 };
