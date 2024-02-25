@@ -12,6 +12,8 @@ bot.on("message", async (ctx) => {
 
   if (ctx.message.text === "меню") {
     showMenu(bot, chatId);
+  } else if (ctx.message.text === "Меню") {
+    showMenu(bot, chatId);
   } else if (ctx.message.location) {
     let weather = await getWeather(ctx);
     ctx.reply(weather);

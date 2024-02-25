@@ -16,9 +16,13 @@ export const showMenu = (bot, chatId) => {
 };
 
 export const closeMenu = (bot, chatId) => {
-  bot.telegram.sendMessage(chatId, "Клавиатура закрыта", {
-    reply_markup: {
-      remove_keyboard: true,
-    },
-  });
+  bot.telegram.sendMessage(
+    chatId,
+    "Меню закрыто, для открытия снова напишите меню",
+    {
+      reply_markup: {
+        remove_keyboard: true,
+      },
+    }
+  );
 };
