@@ -1,27 +1,51 @@
 import { Telegraf } from "telegraf";
 import { config } from "./config.js";
-import { getWeather } from "./weather.js";
-import { getCat } from "./cat.js";
+import * as dotenv from "dotenv";
+import OpenAI from "openai";
+
+import { Loader } from "./loader.js";
 import { showMenu, closeMenu } from "./menu.js";
+
+dotenv.config();
+
+const openai = new OpenAI({
+  apiKey: process.env["API_KEY"],
+});
+
+const history = [];
+
+const getChat = async (userMessage) => {
+  history.push({ role: "user", content: userMessage });
+  const res = await openai.chat.completions.create({
+    model: "gpt-4-0613",
+    messages: history,
+  });
+  return res.choices[0].message.content;
+};
 
 const bot = new Telegraf(config.telegram, {});
 
-bot.start((ctx) => ctx.reply("Добро пожаловать! Нпишите меню."));
+bot.start((ctx) => ctx.reply("Добро пожаловать!"));
+
 bot.on("message", async (ctx) => {
   const chatId = ctx.chat.id;
-
-  if (ctx.message.text === "меню") {
-    showMenu(bot, chatId);
-  } else if (ctx.message.text === "Меню") {
-    showMenu(bot, chatId);
-  } else if (ctx.message.location) {
-    let weather = await getWeather(ctx);
-    ctx.reply(weather);
-  } else if (ctx.message.text === "Получить котика)") {
-    let cat = await getCat();
-    ctx.reply(cat);
-  } else {
-    closeMenu(bot, chatId);
+  try {
+    const loader = new Loader(ctx);
+    if (ctx.message.text === "меню") {
+      showMenu(bot, chatId);
+    } else if (ctx.message.text === "Очистить историю переписки") {
+      history.splice(0, history.length);
+    } else if (ctx.message.text === "Закрыть меню") {
+      closeMenu(bot, chatId);
+    } else {
+      let userMessage = ctx.message.text;
+      loader.show();
+      let chat = await getChat(userMessage);
+      loader.hide();
+      ctx.reply(chat);
+    }
+  } catch (error) {
+    console.log(`Error while proccessing gpt response`, error.message);
   }
 });
 

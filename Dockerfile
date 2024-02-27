@@ -20,6 +20,6 @@ COPY ./ ./
 USER node
 
 # Run npm start script with PM2 when container starts
-CMD [ "pm2-runtime", "npm", "--", "start" ]
+CMD [ "pm2-runtime", "npm", "--restart-delay=10000", "--", "start" ]
 # CMD [ "pm2","start", "yarn", "--restart-delay=10000", "--", "start" ]
 # pm2 start npm --watch --ignore-watch="node_modules" --restart-delay=10000 --name "app_name1" -- start
