@@ -1,5 +1,4 @@
 import { Telegraf } from "telegraf";
-import { config } from "./config.js";
 import * as dotenv from "dotenv";
 import OpenAI from "openai";
 
@@ -23,7 +22,7 @@ const getChat = async (userMessage) => {
   return res.choices[0].message.content;
 };
 
-const bot = new Telegraf(config.telegram, {});
+const bot = new Telegraf(process.env["API_TELEGRAM"], {});
 
 bot.start((ctx) => ctx.reply("Добро пожаловать!"));
 
