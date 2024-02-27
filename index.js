@@ -22,7 +22,7 @@ const getChat = async (userMessage) => {
   return res.choices[0].message.content;
 };
 
-const bot = new Telegraf(process.env["API_TELEGRAM"], {});
+const bot = new Telegraf(process.env["API_TELEGRAM_AI"], {});
 
 bot.start((ctx) => ctx.reply("Добро пожаловать!"));
 
