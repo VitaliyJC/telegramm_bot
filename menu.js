@@ -1,16 +1,7 @@
 export const showMenu = (bot, chatId) => {
   bot.telegram.sendMessage(chatId, "Выберите действие", {
     reply_markup: {
-      keyboard: [
-        [
-          {
-            text: "Узнать погоду",
-            request_location: true,
-          },
-        ],
-        ["Получить котика)"],
-        ["Закрыть меню"],
-      ],
+      keyboard: [["Очистить историю переписки"], ["Закрыть меню"]],
     },
   });
 };
