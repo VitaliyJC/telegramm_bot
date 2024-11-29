@@ -6,7 +6,7 @@ import { showMenu, closeMenu } from "./menu.js";
 
 const bot = new Telegraf(config.telegram, {});
 
-bot.start((ctx) => ctx.reply("Добро пожаловать! Нпишите меню."));
+bot.start((ctx) => ctx.reply("Добро пожаловать! Напишите меню."));
 bot.on("message", async (ctx) => {
   const chatId = ctx.chat.id;
 
